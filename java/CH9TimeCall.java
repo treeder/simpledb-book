@@ -38,14 +38,16 @@ public class CH9TimeCall {
 			}
 			SimpleDB sdb = new SimpleDB(awsAccessId, awsSecretKey);
 
-			try {
-				long start = System.currentTimeMillis();
-				ListDomainsResult list = sdb.listDomains();
-				long end = System.currentTimeMillis();
-				System.out.println("Time for request : "+(end - start)+" msec");
-			} catch (SDBException ex) {
-				System.out.println("Error: "+ex.getMessage());
-				ex.printStackTrace();
+			for (int i=0; i<10; i++) {
+				try {
+					long start = System.currentTimeMillis();
+					ListDomainsResult list = sdb.listDomains();
+					long end = System.currentTimeMillis();
+					System.out.println("Time for request : "+(end - start)+" msec");
+				} catch (SDBException ex) {
+					System.out.println("Error: "+ex.getMessage());
+					ex.printStackTrace();
+				}
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
