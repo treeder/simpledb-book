@@ -36,6 +36,7 @@ public class CH9TimeCall {
 				System.out.println("Secret key not set");
 				return;
 			}
+			int [] times = new int[10];
 			SimpleDB sdb = new SimpleDB(awsAccessId, awsSecretKey);
 
 			for (int i=0; i<10; i++) {
@@ -43,12 +44,17 @@ public class CH9TimeCall {
 					long start = System.currentTimeMillis();
 					ListDomainsResult list = sdb.listDomains();
 					long end = System.currentTimeMillis();
-					System.out.println("Time for request : "+(end - start)+" msec");
+					times[i] = (int)(end-start);
 				} catch (SDBException ex) {
 					System.out.println("Error: "+ex.getMessage());
 					ex.printStackTrace();
 				}
 			}
+			int sum = 0;
+			for (int i=1; i<10; i++) {
+				sum += times[i];
+			}
+			System.out.println("avg time for request : "+(sum/9)+" msec");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
